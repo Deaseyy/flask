@@ -1,0 +1,13 @@
+Flask                 
+flask-blueprint       
+Flask-Script          
+Flask-Session         
+Flask-SQLAlchemy                       
+itsdangerous    
+PyMySQL
+redis                 
+request               
+setuptools            
+SQLAlchemy           
+Werkzeug           
+wheel      

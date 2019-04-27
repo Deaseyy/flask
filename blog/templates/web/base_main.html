@@ -1,0 +1,122 @@
+{% extends 'web/base.html' %}
+
+
+{% block css %}
+    <link href="/static/web/css/base.css" rel="stylesheet">
+    <link href="/static/web/css/index.css" rel="stylesheet">
+    <link href="/static/web/css/m.css" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block header %}
+    <header>
+    <div class="logo"><a href="{{ url_for('first.index') }}">Deaseyy个人博客</a></div>
+    <nav id="nav">
+        <ul>
+            <li><a href="/web/home/">网站首页</a></li>
+            <li><a href="/web/photo/">我的相册</a></li>
+            <li><a href="/web/share">我的分享</a></li>
+            <li><a href="/web/about/">关于我</a></li>
+            <li><a href="/web/info/">内容页</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        window.onload = function () {
+            var obj = null;
+            var As = document.getElementById('nav').getElementsByTagName('a');
+            obj = As[0];
+            for (i = 1; i < As.length; i++) {
+                if (window.location.href.indexOf(As[i].href) >= 0)
+                    obj = As[i];
+            }
+            obj.id = 'selected'
+        }
+    </script>
+</header>
+{% endblock %}
+
+
+{% block about %}
+    <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+                <i><img src="/static/web/images/4.jpg"></i>
+                <p><b>Deaseyy:</b> 一个成长中的python开发者</p>
+            </ul>
+        </div>
+{% endblock %}
+
+
+{% block wdxc %}
+    <div class="wdxc">
+            <h2>我的相册</h2>
+            <ul>
+                <li><a href="/"><img src="/static/web/images/7.jpg"></a></li>
+                <li><a href="/"><img src="/static/web/images/8.jpg"></a></li>
+                <li><a href="/"><img src="/static/web/images/9.jpg"></a></li>
+                <li><a href="/"><img src="/static/web/images/10.jpg"></a></li>
+                <li><a href="/"><img src="/static/web/images/11.jpg"></a></li>
+                <li><a href="/"><img src="/static/web/images/12.jpg"></a></li>
+            </ul>
+        </div>
+{% endblock %}
+
+
+{% block search %}
+    <div class="search">
+            <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+                <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词"
+                       style="color: rgb(153, 153, 153);"
+                       onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
+                       onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+                <input name="show" value="title" type="hidden">
+                <input name="tempid" value="1" type="hidden">
+                <input name="tbname" value="news" type="hidden">
+                <input name="Submit" class="input_submit" value="搜索" type="submit">
+            </form>
+        </div>
+{% endblock %}
+
+
+{% block fenlei %}
+<div class="fenlei">
+    <h2>文章分类</h2>
+    <ul>
+        <!--进入页面时循环显示左侧所有栏目-->
+        {% if types %}
+            {% for type in types %}
+            <li><a href="{{ url_for('web.category', tname=type.tname) }}">{{ type.tname }}</a></li>
+            {% endfor %}
+        {% endif %}
+
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block page %}
+<div id="yema" class="pagelist">
+      <!--<a class="allpage"><b>99</b></a>&nbsp;&nbsp;-->
+      <!--<a class="curPage">1</a>&nbsp;&nbsp;-->
+      <!--<a >2</a>&nbsp;&nbsp;-->
+      <!--<a >3</a>&nbsp;&nbsp;-->
+      <!--<a >4</a>&nbsp;&nbsp;-->
+      <!--<a >5</a>&nbsp;&nbsp;-->
+      <!--<a >6</a>&nbsp;&nbsp;-->
+    {% for page in pages %}
+        {% if loop.first  %}      {# loop.first:是否第一次循环,等同page=0时 #}
+           <a class="curPage">{{ page+1 }}</a>&nbsp;&nbsp;
+            {% else %}
+                <a>{{ page+1 }}</a>&nbsp;&nbsp;
+        {% endif %}
+     {% endfor %}
+      <!--<span >下一页</span>-->
+ </div>
+{% endblock %}
+
+
+{% block footer %}
+  <p style="text-align: center"> Deaseyy个人博客 </p>
+{% endblock %}

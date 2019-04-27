@@ -1,0 +1,40 @@
+{% extends 'web/base_main.html' %}
+
+
+{% block title %}
+    首页-Deaseyy个人博客
+{% endblock %}
+
+
+
+{% block content %}
+<div  class="r_box">
+
+    <!--默认显示分页第一页-->
+        {% if atcs %}
+        <ul id="article">
+          {% for atc in atcs %}
+            <li>
+              <i><a href="{{ url_for('web.show_atc', id=atc.id) }}"><img src="/static/web/images/2.jpg"></a></i>
+              <h3><a href="{{ url_for('web.show_atc', id=atc.id) }}"> {{ atc.title }} </a></h3>
+              <p>{{ atc.desc }}</p>
+            </li>
+
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script src="/static/web/js/jquery.min.js">  </script>
+<script src="/static/web/js/ydspage.js"></script>
+{% endblock %}
+
+
+
+

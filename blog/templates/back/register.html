@@ -1,0 +1,193 @@
+
+{% extends 'back/base_main.html' %}
+
+{% block title %}
+  登陆-博客管理系统
+{% endblock %}
+
+
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <link href="../../static/back/xk_login/css/default.css" rel="stylesheet" type="text/css" />
+	<!--必要样式-->
+    <link href="../../static/back/xk_login/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="../../static/back/xk_login/css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../../static/back/xk_login/css/loaders.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+
+{% block aside %}
+
+{% endblock %}
+
+
+{% block dialogs %}
+
+{% endblock %}
+
+
+{% block content %}
+	<div class='login'>
+       <div style="text-align: center;position: absolute; left:90px; top: 50px;  ">
+          <p style="color:red; font-size:20px; width:200px; ">{{ err }}</p>
+      </div>
+      <form action="" method="post" id="form1" onsubmit="return login_check()">
+        <div class='login_title' style="text-align: center">
+          <span style="font-size: 30px; opacity: 0.7;">注册新用户</span>
+        </div>
+
+        <div class='login_fields'>
+          <div class='login_fields__user'>
+            <div class='icon'>
+              <img alt="" src='../../static/back/xk_login/img/user_icon_copy.png'>
+            </div>
+            <input name="username" placeholder='用户名' maxlength="16" type='text' autocomplete="off" value=""/>
+              <div class='validation'>
+                <img alt="" src='../../static/back/xk_login/img/tick.png'>
+              </div>
+          </div>
+          <div class='login_fields__password'>
+
+            <div class='icon'>
+              <img alt="" src='../../static/back/xk_login/img/lock_icon_copy.png'>
+            </div>
+            <input name="userpwd" placeholder='密码' maxlength="16" type='text' autocomplete="off">
+
+            <div class='icon'>
+              <img alt="" src='../../static/back/xk_login/img/lock_icon_copy.png'>
+            </div>
+            <input name="userpwd2" placeholder='重复输入密码' maxlength="16" type='password' autocomplete="off">
+
+
+
+
+          </div>
+          <div class='login_fields__password'>
+            <div class='icon'>
+              <img alt="" src='../../static/back/xk_login/img/key.png'>
+            </div>
+            <input name="code" placeholder='验证码' maxlength="4" type='text' name="ValidateNum" autocomplete="off">
+
+            <div class='validation' style="opacity: 1; right: -5px;top: -3px;">
+            <canvas class="J_codeimg" id="myCanvas" onclick="Code();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
+            </div>
+
+          </div>
+          <div class='login_fields__submit' style="text-align: center">
+            <input style="width: 200px" type='submit' value='注册'>
+          </div>
+        </div>
+        <div class='success'>
+        </div>
+        <div class='disclaimer'>
+          <h1 ><a href="{{ url_for('web.home') }}">访问前端页面</a></h1>
+	  </div>
+      </form>
+
+	</div>
+
+{% endblock %}
+
+
+{% block js2 %}
+    <link href="../../static/back/xk_login/layui/css/layui.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="../../static/back/xk_login/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/back/xk_login/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src='../../static/back/xk_login/js/stopExecutionOnTimeout.js?t=1'></script>
+    <script type="text/javascript" src="../../static/back/xk_login/layui/layui.js"></script>
+    <script type="text/javascript" src="../../static/back/xk_login/js/Particleground.js"></script>
+    <script type="text/javascript" src="../../static/back/xk_login/js/Treatment.js"></script>
+
+    <script type="text/javascript" src="../../static/back/xk_login/js/jquery.mockjax.js"></script>
+	<script type="text/javascript">
+
+    var canGetCookie = 0;//是否支持存储Cookie 0 不支持 1 支持
+
+    var CodeVal = 0;
+    Code();
+    function Code() {
+        if(canGetCookie == 1){
+            createCode("AdminCode");
+            var AdminCode = getCookieValue("AdminCode");
+            showCheck(AdminCode);
+        }else{
+            showCheck(createCode(""));
+        }
+    }
+
+    function showCheck(a) {
+        CodeVal = a;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, 1000, 1000);
+        ctx.font = "80px 'Hiragino Sans GB'";
+        ctx.fillStyle = "#E8DFE8";
+        ctx.fillText(a, 0, 100);
+    }
+    $(document).keypress(function (e) {
+        // 回车键事件
+        if (e.which == 13) {
+            $('input[type="submit"]').click();
+        }
+    });
+    //粒子背景特效
+    $('body').particleground({
+        dotColor: '#E8DFE8',
+        lineColor: '#133b88'
+    });
+    $('input[name="userpwd"]').focus(function () {
+        $(this).attr('type', 'password');
+    });
+    $('input[type="text"]').focus(function () {
+        $(this).prev().animate({ 'opacity': '1' }, 200);
+    });
+    $('input[type="text"],input[type="password"]').blur(function () {
+        $(this).prev().animate({ 'opacity': '.5' }, 200);
+    });
+    $('input[name="username"],input[name="userpwd"]').keyup(function () {
+        var Len = $(this).val().length;
+        if (!$(this).val() == '' && Len >= 5) {
+            $(this).next().animate({
+                'opacity': '1',
+                'right': '30'
+            }, 200);
+        } else {
+            $(this).next().animate({
+                'opacity': '0',
+                'right': '20'
+            }, 200);
+        }
+    });
+
+    //非空验证
+    function login_check() {
+        var username = $('input[name="username"]').val();
+        var userpwd = $('input[name="userpwd"]').val();
+        var code = $('input[name="code"]').val();
+        if (username == '') {
+            alert('请输入您的账号')
+          console.log(username)
+            return false
+        }
+        if (userpwd == '') {
+          alert('请输入密码')
+            return false
+        }
+        if (code == '' || code.length != 4) {
+            alert('请输入正确的验证码')
+            return false
+        }
+            return true
+    }
+
+    </script>
+{% endblock %}

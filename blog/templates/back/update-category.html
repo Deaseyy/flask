@@ -1,0 +1,39 @@
+{% extends 'back/base_main.html' %}
+
+
+{% block title %}
+  修改栏目-博客管理系统
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <h1 class="page-header">修改栏目</h1>
+      <form action="" method="post">
+        <div class="form-group">
+          <label for="category-name">栏目名称</label>
+          <input type="text" id="category-name" name="name" value="{{ update_type.tname }}" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
+          <span class="prompt-text">这将是它在站点上显示的名字。</span> </div>
+
+        <div class="form-group">
+          <label for="category-keywords">关键字</label>
+          <input type="text" id="category-keywords" name="keywords" value="update_type.keyword" class="form-control" placeholder="在此处输入栏目关键字" autocomplete="off">
+          <span class="prompt-text">关键字会出现在网页的keywords属性中。</span> </div>
+        <div class="form-group">
+          <label for="category-describe">描述</label>
+          <textarea class="form-control" id="category-describe" name="describe" rows="4" autocomplete="off">{{ update_type.desc }}</textarea>
+          <span class="prompt-text">描述会出现在网页的description属性中。</span> </div>
+        <button class="btn btn-primary" type="submit" name="submit">更新</button>
+      </form>
+    </div>
+{% endblock %}
+
+
+{% block js2 %}
+<script>
+  $('#category li').eq(2).addClass('active').siblings().removeClass('active')
+</script>
+  <script src="/static/back/js/bootstrap.min.js"></script>
+  <script src="/static/back/js/admin-scripts.js"></script>
+{% endblock %}

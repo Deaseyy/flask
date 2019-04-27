@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+
+        {% block title %}
+
+        {% endblock %}
+
+    </title>
+
+        {% block css %}
+
+        {% endblock %}
+
+
+        {% block js1 %}
+
+        {% endblock %}
+
+</head>
+<body class="user-stitleelect">
+    <section class="container-fluid">
+
+    {%  block header  %}
+
+    {%  endblock %}
+
+
+    {% block aside %}
+
+    {% endblock %}
+
+    <div class="row">
+
+    {% block content %}
+
+    {% endblock %}
+
+      </div>
+    </section>
+
+
+    {% block dialogs %}
+
+    {% endblock %}
+
+
+    {% block js2 %}
+
+    {% endblock %}
+
+</body>
+</html>

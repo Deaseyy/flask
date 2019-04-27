@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+
+
+        {% block css %}
+
+        {% endblock %}
+
+</head>
+<body>
+
+     {% block header %}
+
+     {% endblock %}
+
+
+    <article>
+        <div class="l_box">
+
+             {% block about %}
+
+             {% endblock %}
+
+
+             {% block wdxc %}
+
+             {% endblock %}
+
+
+             {% block search %}
+
+             {% endblock %}
+
+
+             {% block fenlei %}
+
+             {% endblock %}
+        </div>
+        {% block content %}
+
+        {% endblock %}
+
+    </article>
+
+     {% block page %}
+
+     {% endblock %}
+
+
+    {% block footer %}
+
+    {% endblock %}
+
+
+    {% block js %}
+
+    {% endblock %}
+
+</body>
+</html>
