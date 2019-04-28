@@ -23,8 +23,8 @@ $(function (){
                         var cretime = atcss[i].create_time
 
                         li = $('<li></li>')
-                        $('<i><a href="/share/show_atc/' + id +'/"><img src="/static/web/images/2.jpg"></a></i>').appendTo(li)
-                        $('<h3><a href="/share/show_atc/' + id + '/">' + title+ '</a></h3>').appendTo(li)
+                        $('<i><a href="/web/share/show_atc/' + id +'/"><img src="/static/web/images/2.jpg"></a></i>').appendTo(li)
+                        $('<h3><a href="/web/share/show_atc/' + id + '/">' + title+ '</a></h3>').appendTo(li)
                         $('<p>' + desc + '</p>').appendTo(li)
                         li.appendTo('#article')
                     }
