@@ -18,7 +18,7 @@ def paging():
     atcs_all = Article.query.filter().all()
     pages = list(range(math.ceil(len(atcs_all) / 4)))  # 计算应该显示的页数
     # 默认显示第一页的数据
-    atcs = Article.query.order_by(Article.create_time).offset(0).limit(4).all()
+    atcs = Article.query.order_by(-Article.create_time).offset(0).limit(4).all()
     res = [atcs_all, pages, atcs]
     return res
 
@@ -46,7 +46,6 @@ def share():
         # 显示左侧栏目分类
         types = Atc_type.query.filter().all()
         # 默认显示第一个栏目类型文章
-
         res = paging()
         return render_template('web/share.html', types=types, pages=res[1], atcs=res[2])
 
@@ -80,7 +79,7 @@ def category(tname):
     type = Atc_type.query.filter(Atc_type.tname == tname).first() #查找到指定类的对象
     pages = list(range(math.ceil(len(type.atcs) / 4)))  # 计算应该显示的页数
     # 默认显示第一页的数据
-    atcs = Article.query.order_by(Article.create_time).offset(0).limit(4).all()
+    atcs = Article.query.filter(Article.type==type.id).order_by(-Article.id).offset(0).limit(4).all()
     return render_template('web/share.html', atcs=atcs, types=types, pages=pages)  #类型对象.关联关系(atcs) 得到所有该类文章
 
 
