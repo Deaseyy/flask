@@ -13,14 +13,33 @@ wblue = Blueprint('web', __name__)
 
 
 
-# 分页
-def paging():
+# 默认渲染分页第一页
+def default_page():
     atcs_all = Article.query.filter().all()
-    pages = list(range(math.ceil(len(atcs_all) / 4)))  # 计算应该显示的页数
+    pages = list(range(math.ceil(len(atcs_all) / 5)))  # 计算应该显示的页数
     # 默认显示第一页的数据
-    atcs = Article.query.order_by(-Article.create_time).offset(0).limit(4).all()
+    atcs = Article.query.order_by(-Article.create_time).offset(0).limit(5).all()
     res = [atcs_all, pages, atcs]
     return res
+
+# ajax分页
+def ajax_page(atcs):
+    atcss = []
+    for atc in atcs:
+        atc_dict = {}
+        atc_dict['id'] = atc.id
+        atc_dict['title'] = atc.title
+        atc_dict['desc'] = atc.desc
+        atc_dict['content'] = atc.content
+        atc_dict['create_time'] = atc.create_time.strftime('%Y-%m-%d %X')
+        atc_dict['type'] = atc.type  # type保存的时类型的id
+        atc_dict['uid'] = atc.uid
+        atc_dict['tname'] = atc.tp.tname  # 获取类型名
+        atcss.append(atc_dict)
+    # return jsonify({'status':200})
+    return jsonify({'atcss': atcss})
+
+
 
 
 # 网站主页
@@ -28,7 +47,7 @@ def paging():
 def home():
     # 显示左侧栏目分类
     types = Atc_type.query.filter().all()
-    res = paging()
+    res = default_page()
     return render_template('web/home.html', types=types, pages=res[1], atcs=res[2])
 
 
@@ -45,42 +64,33 @@ def share():
     if request.method == 'GET':
         # 显示左侧栏目分类
         types = Atc_type.query.filter().all()
-        # 默认显示第一个栏目类型文章
-        res = paging()
+        # 默认显示第一页数据
+        res = default_page()
         return render_template('web/share.html', types=types, pages=res[1], atcs=res[2])
 
     if request.method == 'POST':
         page = int(request.form.get('page'))
-        atcs = Article.query.offset((page - 1) * 4).limit(4).all()
-
-        atcss = []
-        for atc in atcs:
-            atc_dict = {}
-            atc_dict['id'] =atc.id
-            atc_dict['title'] = atc.title
-            atc_dict['desc'] = atc.desc
-            atc_dict['content'] = atc.content
-            atc_dict['create_time'] = atc.create_time.strftime('%Y-%m-%d %X')
-            atc_dict['type'] = atc.type        # type保存的时类型的id
-            atc_dict['uid'] = atc.uid
-            atc_dict['tname'] = atc.tp.tname    # 获取类型名
-            atcss.append(atc_dict)
-        # return jsonify({'status':200})
-        return jsonify({'atcss':atcss})
+        atcs = Article.query.order_by(-Article.create_time).offset((page - 1) * 5).limit(5).all()
+        return ajax_page(atcs)
 
 
 # 所选栏目的所有文章界面
-@wblue.route('/share/<string:tname>/',methods=['GET'])
+@wblue.route('/share/<string:tname>/',methods=['GET', 'POST'])
 def category(tname):
-    # 显示左侧栏目分类
-    types = Atc_type.query.filter().all()
-
-    # 显示该类所有文章
-    type = Atc_type.query.filter(Atc_type.tname == tname).first() #查找到指定类的对象
-    pages = list(range(math.ceil(len(type.atcs) / 4)))  # 计算应该显示的页数
-    # 默认显示第一页的数据
-    atcs = Article.query.filter(Article.type==type.id).order_by(-Article.id).offset(0).limit(4).all()
-    return render_template('web/share.html', atcs=atcs, types=types, pages=pages)  #类型对象.关联关系(atcs) 得到所有该类文章
+    if request.method == 'GET':
+        # 显示左侧栏目分类
+        types = Atc_type.query.filter().all()
+        # 显示该类所有文章
+        type = Atc_type.query.filter(Atc_type.tname == tname).first() #查找到指定类的对象
+        pages = list(range(math.ceil(len(type.atcs) / 5)))  # 计算应该显示的页数
+        # 默认显示第一页的数据
+        atcs = Article.query.filter(Article.type==type.id).order_by(-Article.create_time).offset(0).limit(5).all()
+        return render_template('web/share.html', atcs=atcs, types=types, pages=pages)  #类型对象.关联关系(atcs) 得到所有该类文章
+    if request.method == 'POST':
+        page = int(request.form.get('page'))
+        type = Atc_type.query.filter(Atc_type.tname == tname).first()  # 查找到指定类的对象
+        atcs = Article.query.filter(Article.type==type.id).order_by(-Article.create_time).offset((page - 1) * 5).limit(5).all()
+        return ajax_page(atcs)
 
 
 # 显示选定文章的内容界面

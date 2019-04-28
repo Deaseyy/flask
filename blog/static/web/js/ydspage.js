@@ -11,7 +11,8 @@ $(function (){
 
             // 获取点击对应页的文章
             function get_atc(page){
-                $.post('/web/share/', {'page':page}, function (data) {
+                var href= location.href
+                $.post(href, {'page':page}, function (data) {
                     $('#article').empty()
                     var atcss = data.atcss
                     console.log(atcss)
