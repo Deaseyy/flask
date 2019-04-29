@@ -37,7 +37,7 @@
     <h2>最近更新</h2>
     <ul>
         {% for atc in recent_atcs %}
-            <li><a href="/">{{ atc.title }}</a></li>
+            <li><a href="{{ url_for('web.show_atc', id=atc.id) }}">{{ atc.title }}</a></li>
         {% endfor %}
     </ul>
 </div>
