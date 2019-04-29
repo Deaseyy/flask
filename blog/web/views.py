@@ -41,7 +41,6 @@ def ajax_page(atcs):
 
 
 
-
 # 网站主页
 @wblue.route('/home/',methods=['GET'])
 def home():
@@ -62,11 +61,13 @@ def photo():
 @wblue.route('/share/',methods=['GET','POST'])
 def share():
     if request.method == 'GET':
-        # 显示左侧栏目分类
+        # 显示左侧文章分类
         types = Atc_type.query.filter().all()
-        # 默认显示第一页数据
+        # 最近更新
+        recent_atcs = Article.query.order_by(-Article.create_time).offset(0).limit(8).all()
+        # 默认显示第一页文章数据
         res = default_page()
-        return render_template('web/share.html', types=types, pages=res[1], atcs=res[2])
+        return render_template('web/share.html', types=types, pages=res[1], atcs=res[2],recent_atcs=recent_atcs)
 
     if request.method == 'POST':
         page = int(request.form.get('page'))
@@ -85,7 +86,9 @@ def category(tname):
         pages = list(range(math.ceil(len(type.atcs) / 5)))  # 计算应该显示的页数
         # 默认显示第一页的数据
         atcs = Article.query.filter(Article.type==type.id).order_by(-Article.create_time).offset(0).limit(5).all()
-        return render_template('web/share.html', atcs=atcs, types=types, pages=pages)  #类型对象.关联关系(atcs) 得到所有该类文章
+        # 最近更新
+        recent_atcs = Article.query.order_by(-Article.create_time).offset(0).limit(8).all()
+        return render_template('web/share.html', atcs=atcs, types=types, pages=pages, recent_atcs=recent_atcs)  #类型对象.关联关系(atcs) 得到所有该类文章
     if request.method == 'POST':
         page = int(request.form.get('page'))
         type = Atc_type.query.filter(Atc_type.tname == tname).first()  # 查找到指定类的对象
@@ -100,7 +103,9 @@ def show_atc(id):
     types = Atc_type.query.filter().all()
     # 显示文章内容
     atc = Article.query.filter(Article.id == id).first()
-    return render_template('web/share.html', atc=atc, types=types)
+    # 最近更新
+    recent_atcs = Article.query.order_by(-Article.create_time).offset(0).limit(8).all()
+    return render_template('web/share.html', atc=atc, types=types, recent_atcs=recent_atcs)
 
 
 # 关于我

@@ -26,3 +26,4 @@ a#selected,nav li a:hover { display: block; background: #66afe9; color: #fff; bo
 /*footer*/
 footer { width: 100%; color: #a5a4a4; text-align: center; padding: 20px 0; clear: both; text-shadow: #fff 1px 0 2px, #fff 0 1px 2px, #fff -1px 0 2px, #fff 0 -1px 2px; }
 footer a { color: #a5a4a4 ; }
+.header-navigation {position: fixed;top: 0;width: 100%;height: 60px;line-height: 60px;background: rgba(255,255,255,.9);text-align: center;border-bottom: 1px solid #ddd;box-shadow: 0 1px 1px rgba(0,0,0,.04);z-index: 9999;}

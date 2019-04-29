@@ -6,14 +6,18 @@
     <link href="/static/web/css/index.css" rel="stylesheet">
     <link href="/static/web/css/info.css" rel="stylesheet">
     <link href="/static/web/css/m.css" rel="stylesheet">
+
+    <script src="/static/web/js/jquery.min.js" type="text/javascript"></script>
+
 {% endblock %}
 
 
 
 {% block header %}
-    <header>
+    <header class="header-navigation" id="header">
     <div class="logo"><a href="{{ url_for('first.index') }}">Deaseyy个人博客</a></div>
     <nav id="nav">
+
         <ul>
             <li><a href="/web/home/">网站首页</a></li>
             <li><a href="/web/photo/">我的相册</a></li>
@@ -21,6 +25,7 @@
             <li><a href="/web/about/">关于我</a></li>
             <li><a href="/web/info/">内容页</a></li>
         </ul>
+
     </nav>
 
     <script>
@@ -43,7 +48,7 @@
     <div class="about_me">
             <h2>关于我</h2>
             <ul>
-                <i><img src="/static/web/images/4.jpg"></i>
+                <i><img height="90" src="/static/web/images/tomcat.ico"></i>
                 <p><b>Deaseyy:</b> 一个成长中的python开发者</p>
             </ul>
         </div>
@@ -97,25 +102,7 @@
 {% endblock %}
 
 
-{% block page %}
-<div id="yema" class="pagelist">
-      <!--<a class="allpage"><b>99</b></a>&nbsp;&nbsp;-->
-      <!--<a class="curPage">1</a>&nbsp;&nbsp;-->
-      <!--<a >2</a>&nbsp;&nbsp;-->
-      <!--<a >3</a>&nbsp;&nbsp;-->
-      <!--<a >4</a>&nbsp;&nbsp;-->
-      <!--<a >5</a>&nbsp;&nbsp;-->
-      <!--<a >6</a>&nbsp;&nbsp;-->
-    {% for page in pages %}
-        {% if loop.first  %}      {# loop.first:是否第一次循环,等同page=0时 #}
-           <a class="curPage">{{ page+1 }}</a>&nbsp;&nbsp;
-            {% else %}
-                <a>{{ page+1 }}</a>&nbsp;&nbsp;
-        {% endif %}
-     {% endfor %}
-      <!--<span >下一页</span>-->
- </div>
-{% endblock %}
+
 
 
 {% block footer %}

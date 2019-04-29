@@ -6,6 +6,23 @@
 {% endblock %}
 
 
+{% block css %}
+{{ super() }}
+<link rel="icon" href="/static/web/images/tomcat.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/static/web/images/tomcat.ico" type="image/x-icon">
+{% endblock %}
+
+
+{% block links %}
+<div class="links">
+    <h2>友情链接</h2>
+    <ul>
+       <a href="http://www.yangqq.com">杨青个人博客</a> <a href="http://www.yangqq.com">杨青博客</a>
+    </ul>
+</div>
+{% endblock %}
+
+
 
 {% block content %}
 <div  class="r_box">
@@ -24,7 +41,7 @@
         </ul>
         {% endif %}
 
-<div style="text-align: center;"> <a style="color: #f4f5f6;" href="{{ url_for('web.share') }}"> 查看更多>></a> </div>
+<div style="text-align: center;"> <a style="color: #0785d1;" href="{{ url_for('web.share') }}"> 查看更多>></a> </div>
 </div>
 {% endblock %}
 
