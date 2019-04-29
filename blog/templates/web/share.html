@@ -33,23 +33,140 @@
         </ul>
         {% endif %}
 
-
+  </div>
 
     <!--文章内容显示界面-->
-    {% if atc %}
-        <li>
-            <i><img src="/static/web/images/2.jpg"></i>
-            <h3 style="text-align: center"> {{ atc.title }} </h3>
-            <p> {{ atc.content | safe }} </p>
-        </li>
-    {% endif %}
+{% if atc %}
+     <main>
+    <div class="infosbox">
+      <div class="newsview">
+        <h3 class="news_title" style="text-align: center"> {{ atc.title }} </h3>
+        <div class="bloginfo">
+          <ul>
+            <li class="author">作者：<a href="{{ url_for('web.about') }}">Deaseyy</a></li>
+            <li class="lmname">分类: <a href="{{ url_for('web.share', tname=atc.tp.tname) }}">{{ atc.tp.tname }}</a></li>
+            <li class="timer">时间：{{ atc.create_time }}</li>
+            <li class="view">4567人已阅读</li>
+          </ul>
+        </div>
+        <div class="tags"><a href="/" target="_blank">个人博客</a> &nbsp; <a href="/" target="_blank">小世界</a></div>
+        <div class="news_about"><strong>简介</strong>个人博客，主要用来记录学习和工作过程中的一些心得和笔记，也会放上一些照片，音乐。每天工作回家后就能访问自己的网站，一边听着音乐，一边记录。</div>
+        <div class="news_con">
+            {{ atc.content | safe }}
 
-  </div>
+        </div>
+      </div>
+      <div class="share">
+        <p class="diggit"><a href="JavaScript:makeRequest('/e/public/digg/?classid=3&amp;id=19&amp;dotop=1&amp;doajax=1&amp;ajaxarea=diggnum','EchoReturnedText','GET','');"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>
+      </div>
+      <div class="nextinfo">
+        <p>上一篇：<a href="/news/life/2018-03-13/804.html">作为一个设计师,如果遭到质疑你是否能恪守自己的原则?</a></p>
+        <p>下一篇：<a href="/news/life/">返回列表</a></p>
+      </div>
+      <div class="news_pl">
+        <h2>文章评论</h2>
+        <div class="gbko">
+          <script src="/e/pl/more/?classid=77&amp;id=106&amp;num=20"></script>
+          <div class="fb">
+            <ul>
+              <p class="fbtime"><span>2018-07-24 11:52:38</span>dancesmile</p>
+              <p class="fbinfo">这才是我要的朋友圈</p>
+            </ul>
+          </div>
+          <div class="fb">
+            <ul>
+              <p class="fbtime"><span>2018-07-24 08:52:48</span> 卜野</p>
+              <p class="fbinfo"></p>
+              <div class="ecomment"><span class="ecommentauthor">网友 家蚂蚁 的原文：</span>
+                <p class="ecommenttext">坚持哟!看你每天都有写，请继续加油，再接再厉哦</p>
+              </div>
+            </ul>
+          </div>
+
+          <script>
+		  function CheckPl(obj)
+		  {
+		  if(obj.saytext.value=="")
+		  {
+		  alert("您没什么话要说吗？");
+		  obj.saytext.focus();
+		  return false;
+		  }
+		  return true;
+		  }
+		  </script>
+          <form action="/e/pl/doaction.php" method="post" name="saypl" id="saypl" onsubmit="return CheckPl(document.saypl)">
+            <div id="plpost">
+              <p class="saying"><span><a href="/e/pl/?classid=77&amp;id=106">共有<script type="text/javascript" src="/e/public/ViewClick/?classid=77&amp;id=106&amp;down=2"></script>2条评论</a></span>来说两句吧...</p>
+              <p class="yname"><span>用户名:</span>
+                <input name="username" type="text" class="inputText" id="username" value="" size="16">
+              </p>
+              <p class="yzm"><span>验证码:</span>
+                <input name="key" type="text" class="inputText" size="16">
+              </p>
+              <input name="nomember" type="hidden" id="nomember" value="1" checked="checked">
+              <textarea name="saytext" rows="6" id="saytext"></textarea>
+              <input name="imageField" type="submit" value="提交">
+              <input name="id" type="hidden" id="id" value="106">
+              <input name="classid" type="hidden" id="classid" value="77">
+              <input name="enews" type="hidden" id="enews" value="AddPl">
+              <input name="repid" type="hidden" id="repid" value="0">
+              <input type="hidden" name="ecmsfrom" value="/joke/talk/2018-07-23/106.html">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endif %}
+
 {% endblock %}
 
 
 {% block js %}
 <script src="/static/web/js/jquery.min.js">  </script>
 <script src="/static/web/js/ydspage.js"></script>
+
+<script>
+window.onload = function ()
+{
+var obj=null;
+var As=document.getElementById('nav').getElementsByTagName('a');
+obj = As[0];
+for(i=1;i<As.length;i++){if(window.location.href.indexOf(As[i].href)>=0)
+obj=As[i];}
+obj.id='selected'
+}
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+	t = $('.tuijian').offset().top;
+	mh = $('.infosbox').height();
+	fh = $('.tuijian').height();
+	gh = $('.guanzhu').height();
+	$(window).scroll(function(e){
+		s = $(document).scrollTop();
+		if(s > t - 10){
+			$('.tuijian').css('position','fixed');
+
+			if(s + fh > mh){
+				$('.tuijian').css('top',mh-s-fh+'px');
+			}
+		}else{
+			$('.tuijian').css('position','');
+		}
+		if(s > t - 10){
+			$('.guanzhu').css('position','fixed');
+			if(s + gh > mh){
+				$('.guanzhu').css('top',mh-s-gh+'px');
+			}
+		}else{
+			$('.guanzhu').css('position','');
+		}
+	})
+});
+</script>
+
 {% endblock %}
 

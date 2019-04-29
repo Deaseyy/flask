@@ -12,10 +12,13 @@ $(function (){
             // 获取点击对应页的文章
             function get_atc(page){
                 var href= location.href
+                console.log(href)
                 $.post(href, {'page':page}, function (data) {
                     $('#article').empty()
                     var atcss = data.atcss
                     console.log(atcss)
+                    console.log(href)
+
                     for(var i=0;i<atcss.length;i++) {
                         var id = atcss[i].id
                         var title = atcss[i].title
